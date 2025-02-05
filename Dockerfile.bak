@@ -75,6 +75,16 @@ COPY --from=deps app/vendor/ /var/www/html/vendor
 # Copy the app files from the app directory.
 COPY ./src /var/www/html
 
+# Change the Apache port to a non-privileged port (e.g., 8080).
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
+RUN sed -i 's/:80/:8080/' /etc/apache2/sites-available/000-default.conf
+
 # Switch to a non-privileged user (defined in the base image) that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
 USER www-data
+
+# Expose the non-privileged port.
+EXPOSE 8080
+
+# Start Apache in the foreground.
+CMD ["apache2-foreground"]
