@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM composer:lts as prod-deps
+
 WORKDIR /app
 RUN --mount=type=bind,source=./composer.json,target=composer.json \
     --mount=type=bind,source=./composer.lock,target=composer.lock \
@@ -14,4 +15,7 @@ COPY ./src /var/www/html
 FROM base as final
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --from=prod-deps app/vendor/ /var/www/html/vendor
+
+EXPOSE 80
+
 USER www-data
