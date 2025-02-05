@@ -14,12 +14,12 @@
     $stmt = $db_handle->query("SELECT * FROM messages ORDER BY id DESC");
   ?>
 
-  <div class="space-y-3">
+  <div class="space-y-3 p-5">
     <h1 class="text-lg"><?php echo "Messages"; ?></h1>
 
     <form action="actions/create.php" method="post" class="flex gap-3">
-      <input type="text" name="message" id="message" placeholder="Message" class="border border-gray-500 rounded-md px-3 py-1">
-      <button name="submit" class="rounded-md border-green-700 bg-green-700 cursor-pointer px-3 py-1">
+      <input type="text" name="message" id="message" placeholder="Message" class="border border-gray-500 rounded px-3 py-1">
+      <button name="submit" class="rounded bg-green-700 cursor-pointer px-3 py-1">
         <span class="text-white">Add</span>
       </button>
     </form>
@@ -30,6 +30,7 @@
           <tr class="text-right">
             <th class="p-3 text-left">ID</th>
             <th class="p-3 text-left">Message</th>
+            <th class="p-3 text-left" width="100">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +38,14 @@
           <tr class="text-right border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-100">
             <td class="px-3 py-2 text-left"><?php echo $row['id']; ?></td>
             <td class="px-3 py-2 text-left"><?php echo $row['message']; ?></td>
+            <td class="px-3 py-2 text-left">
+              <form action="actions/delete.php" method="post">
+                <input type="text" name="id" id="id" class="hidden" value="<?php echo $row['id'] ?>">
+                <button name="delete" class="rounded bg-red-700 cursor-pointer px-3 py-1">
+                  <span class="text-white">Delete</span>
+                </button>
+              </form>
+            </td>
           </tr>
           <?php } ?>
         </tbody>
