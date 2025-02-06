@@ -7,7 +7,12 @@
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body>
-  <?php require_once("db_connect.php"); ?>
+  <?php 
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    
+    require_once("db_connect.php"); 
+  ?>
 
   <?php 
     // Fetch data in descending order (lastest entry first)
